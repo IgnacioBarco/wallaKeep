@@ -1,17 +1,28 @@
 import React, { Component } from "react";
 import MainContext from "../services/MainContext";
+import locStorage from "../services/LocalStorage";
 
 export default class AdvertsList extends Component {
   // constructor(props) {
   //   super(props);
-    // const { name, surname, tag } = this.context;
-    // console.log('contexto de AdvertList en constructor: ' + this.context);
+  // const { name, surname, tag } = this.context;
+  // console.log('contexto de AdvertList en constructor: ' + this.context);
 
   // }
 
   render() {
+    if (!locStorage.checkIsNull()) {
+      console.log("falta algun dato");
+      this.props.history.push("/");
+    } else {
+      console.log("todo bien");
+    }
+
+    this.context = locStorage.checkLocalStorage(this.context);
+
     const { name, surname, tag } = this.context;
-    console.log('contexto de AdvertList: ' + this.context);
+
+    console.log(`contexto de AdvertList: ${name} ${surname} ${tag}`);
 
     return (
       <div>

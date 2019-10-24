@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import MainContext from "../services/MainContext";
+import locStorage from '../services/LocalStorage';
+
 
 export default class Register extends Component {
   constructor() {
@@ -18,6 +20,11 @@ export default class Register extends Component {
     this.context.name = name;
     this.context.surname = surname;
     this.context.tag = tag;
+
+    // Guardamos en localstorage
+    locStorage.setItem('name', name);
+    locStorage.setItem('surname', surname);
+    locStorage.setItem('tag', tag);
 
     this.props.history.push('/adverts');
   };
