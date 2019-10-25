@@ -9,6 +9,7 @@ export default class AdvertsList extends Component {
   // console.log('contexto de AdvertList en constructor: ' + this.context);
 
   // }
+  
 
   render() {
     if (!locStorage.checkIsNull()) {
@@ -30,6 +31,8 @@ export default class AdvertsList extends Component {
         <h3>v{name}</h3>
         <h3>v{surname}</h3>
         <h3>v{tag}</h3>
+        <a href="/detail/1"> detail1 </a>
+        
       </div>
     );
   }
