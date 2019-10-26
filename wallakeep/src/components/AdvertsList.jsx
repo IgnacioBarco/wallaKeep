@@ -15,9 +15,27 @@ export default class AdvertsList extends Component {
       adverts: []
     };
 
-    this.handleSubmit();
+    this.loadInitList();
+
   }
 
+  loadInitList = async event => {
+    const data = await searchAll();
+    const { success, count, results } = data;
+
+    let adverts = [];
+
+    results.map(elem => {
+      adverts.push(new Advert(elem));
+    });
+
+    this.setState({
+      adverts
+    });
+
+  };
+
+  //parte para filtros
   handleSubmit = async event => {
     const data = await searchAll();
     const { success, count, results } = data;
@@ -35,7 +53,6 @@ export default class AdvertsList extends Component {
   };
 
   buildAdvertsList = () => {
-    if (this.state.adverts.length > 0) {
       return (
         <div className="row">
           {this.state.adverts.map(advert => (
@@ -43,7 +60,6 @@ export default class AdvertsList extends Component {
           ))}
         </div>
       );
-    }
   };
 
   render() {
@@ -58,14 +74,10 @@ export default class AdvertsList extends Component {
 
     const { name, surname, tag } = this.context;
     
-    // console.log(`contexto de AdvertList: ${name} ${surname} ${tag}`);
-    // console.log("render this.state");
-    // console.log(this.state);
-    // console.log("render this.state");
-
     return (
       <div>
         <h1>Lista de filtros:</h1>
+
         <h3>v{name}</h3>
         <h3>v{surname}</h3>
         <h3>v{tag}</h3>
@@ -76,6 +88,8 @@ export default class AdvertsList extends Component {
 
         <h1>Lista de artículos:</h1>
         {
+          this.state.adverts.length > 0
+          &&
           this.buildAdvertsList()
         }
 

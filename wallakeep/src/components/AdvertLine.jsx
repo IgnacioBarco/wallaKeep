@@ -8,9 +8,7 @@ class AdvertLine extends Component {
 
   render() {
     const { advert } = this.props;
-    console.log('advertLine')
-    console.log(advert.name)
-    console.log('advertLine')
+
     return (
       <div
         style={{
@@ -20,15 +18,7 @@ class AdvertLine extends Component {
         className="col-4"
         onClick={this.goToDetail}
       >
-        <h5
-          // style={{
-          //   color: movie.isImportant() ? "green" : "red"
-          // }}
-        >
-          {advert.name}
-        </h5>
-        {/* <p>{movie.popularity}</p>
-        <p>{movie.vote_count}</p> */}
+        <h5>{advert.name}</h5>
       </div>
     );
   }
