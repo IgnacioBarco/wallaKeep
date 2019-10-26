@@ -19,6 +19,8 @@ export default class CreateAndUpdate extends Component {
 
     const { name, surname, tag } = this.context;
 
+    console.log(`contexto de CreateAndUpdate: ${name} ${surname} ${tag}`);
+
     return <h1>CreateAndUpdate</h1>;
   }
 }

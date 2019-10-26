@@ -24,6 +24,8 @@ export default class AdvertDetail extends Component {
 
     const { name, surname, tag } = this.context;
 
+    console.log(`contexto de AdvertDetail: ${name} ${surname} ${tag}`);
+
     return (
       <div>
         <h1>AdvertDetail</h1>

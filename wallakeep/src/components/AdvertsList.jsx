@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import MainContext from "../services/MainContext";
 import locStorage from "../services/LocalStorage";
+import api from "../services/NodePopDBService"
+
+const { searchAll } = api();
 
 export default class AdvertsList extends Component {
-  // constructor(props) {
-  //   super(props);
-  // const { name, surname, tag } = this.context;
-  // console.log('contexto de AdvertList en constructor: ' + this.context);
+  constructor(props) {
+    super(props);
 
-  // }
+    
+  }
   
 
   render() {
@@ -18,13 +20,17 @@ export default class AdvertsList extends Component {
     } else {
       console.log("todo bien");
     }
-
+    
     this.context = locStorage.checkLocalStorage(this.context);
-
+    
     const { name, surname, tag } = this.context;
-
+    
     console.log(`contexto de AdvertList: ${name} ${surname} ${tag}`);
-
+    
+    const aaa = searchAll()
+    // .then(() => console.log('lalalla'));
+    console.log(aaa)
+    
     return (
       <div>
         <h1>AdvertsList</h1>

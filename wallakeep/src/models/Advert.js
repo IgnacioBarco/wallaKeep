@@ -8,7 +8,7 @@ export default class Advert {
     tags = [];
     createdAt;
     updatedAt;
-    
+
     constructor(value) {
         this.id = value.id;
         this.name = value.name;
@@ -19,7 +19,7 @@ export default class Advert {
         this.tags = value.tags;
         this.createdAt = value.createdAt;
         this.updatedAt = value.updatedAt;
-        
+
     }
 
     // isImportant() {
