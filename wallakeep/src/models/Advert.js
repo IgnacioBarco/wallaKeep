@@ -1,5 +1,5 @@
 export default class Advert {
-    id;
+    _id;
     name;
     description;
     price;
@@ -10,7 +10,7 @@ export default class Advert {
     updatedAt;
 
     constructor(value) {
-        this.id = value.id;
+        this._id = value._id;
         this.name = value.name;
         this.description = value.description;
         this.price = value.price;

@@ -2,43 +2,41 @@ import Advert from '../models/Advert';
 
 const API_URL = 'http://localhost:3001';
 const ALL_ADVERTS = API_URL + '/apiv1/anuncios'
-const data = { 
-    method: "GET" ,
-    headers:{ 
+const data = {
+    method: "GET",
+    headers: {
         Accept: "application/json, text/plain, */*"
-    },
-    mode: "no-cors"
+    }
 }
-   
+
 
 
 const api = () => {
     return {
-        searchAll : async (id) => {
+        searchAll: async (id) => {
             try {
-                const response = await fetch('http://localhost:3001/apiv1/anuncios'
-                , data)
+                const response = await fetch(ALL_ADVERTS, data)
 
                 console.log(response)
-                
-                if (!response.status===0) {
-                    throw new Error('Error fetching jjkghjgkhjgkh')
-                }
-                
-                const dataDetails = await response.json();
-                
-                const { success, count, results } = dataDetails;
 
-                if (success === false) {
-                    return "no hay ninguna cerveza con ese id";
+                if (!response.ok) {
+                    throw new Error('Error fetching searchAll')
                 }
 
-                return results;
+                const dataDetails = response.json();
+
+                // const { success, count, results } = dataDetails;
+
+                // if (success === false) {
+                //     return "no hay ninguna cerveza con ese id";
+                // }
+
+                return dataDetails;
 
             } catch (err) {
                 console.log('error: ' + err);
                 throw err;
-            }    
+            }
         }
     }
 }
