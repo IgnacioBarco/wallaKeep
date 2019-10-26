@@ -19,41 +19,31 @@ export default class AdvertsList extends Component {
   }
 
   handleSubmit = async event => {
-    this.state.adverts = [];
-
     const data = await searchAll();
-
     const { success, count, results } = data;
 
+    let adverts = [];
+
     results.map(elem => {
-      this.state.adverts.push(new Advert(elem));
+      adverts.push(new Advert(elem));
     });
 
-    console.log(this.state);
+    this.setState({
+      adverts
+    });
+
   };
 
-  buildAdvertsList = adverts => {
-    let datos = [];
-    datos = adverts;
-    console.log("adverts ");
-    console.log(adverts);
-    console.log("adverts ");
-
-    console.log("datos");
-    console.log(datos);
-    console.log(adverts[[1]]);
-    console.log("datos");
-    
-
-    return (
-      <div className="row">
-        linea---
-        {datos.map(advert => ( <AdvertLine advert={{ advert }} /> ))
-        // <AdvertLine advert={{tags: Array(3), _id: "5db338218cfc2139bc897417", name: "Raton Gaming Razer Mam"}}/>
-        }
-        +++fin
-      </div>
-    );
+  buildAdvertsList = () => {
+    if (this.state.adverts.length > 0) {
+      return (
+        <div className="row">
+          {this.state.adverts.map(advert => (
+            <AdvertLine advert={advert} />
+          ))}
+        </div>
+      );
+    }
   };
 
   render() {
@@ -67,23 +57,28 @@ export default class AdvertsList extends Component {
     this.context = locStorage.checkLocalStorage(this.context);
 
     const { name, surname, tag } = this.context;
-    console.log(`contexto de AdvertList: ${name} ${surname} ${tag}`);
-
-    // /////////////////////////////////////////////
-    const { adverts } = this.state;
+    
+    // console.log(`contexto de AdvertList: ${name} ${surname} ${tag}`);
+    // console.log("render this.state");
+    // console.log(this.state);
+    // console.log("render this.state");
 
     return (
       <div>
-        <h1>AdvertsList</h1>
+        <h1>Lista de filtros:</h1>
         <h3>v{name}</h3>
         <h3>v{surname}</h3>
         <h3>v{tag}</h3>
-        <button onClick={this.handleSubmit}>submit</button>
+        
+        <button onClick={this.handleSubmit}>
+          Buscar
+        </button>
 
-        <h1>advertsline</h1>
-        {this.buildAdvertsList(adverts)}
+        <h1>Lista de artículos:</h1>
+        {
+          this.buildAdvertsList()
+        }
 
-        <a href="/detail/1"> detail1 </a>
       </div>
     );
   }
