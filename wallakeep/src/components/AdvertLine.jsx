@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import Advert from "../models/Advert";
 
 class AdvertLine extends Component {
   goToDetail = () => {
@@ -8,16 +7,16 @@ class AdvertLine extends Component {
   };
 
   render() {
-    const { Advert } = this.props;
+    const { advert } = this.props;
     console.log('advertLine')
-    console.log(Advert.name)
+    console.log(advert.name)
     console.log('advertLine')
     return (
       <div
         style={{
           cursor: "pointer"
         }}
-        key={Advert._id}
+        key={advert._id}
         className="col-4"
         onClick={this.goToDetail}
       >
@@ -26,7 +25,7 @@ class AdvertLine extends Component {
           //   color: movie.isImportant() ? "green" : "red"
           // }}
         >
-          {Advert.name}
+          {advert.name}
         </h5>
         {/* <p>{movie.popularity}</p>
         <p>{movie.vote_count}</p> */}

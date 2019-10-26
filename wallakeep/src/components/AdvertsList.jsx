@@ -14,7 +14,7 @@ export default class AdvertsList extends Component {
     this.state = {
       adverts: []
     };
-   
+
     this.handleSubmit();
   }
 
@@ -27,36 +27,33 @@ export default class AdvertsList extends Component {
 
     results.map(elem => {
       this.state.adverts.push(new Advert(elem));
-      
     });
 
-    console.log(this.state)
-
-    
+    console.log(this.state);
   };
 
-  buildAdvertsList = (adverts) => {
+  buildAdvertsList = adverts => {
+    let datos = [];
+    datos = adverts;
+    console.log("adverts ");
+    console.log(adverts);
+    console.log("adverts ");
+
+    console.log("datos");
+    console.log(datos);
+    console.log(adverts[[1]]);
+    console.log("datos");
     
-    console.log('pintar ')
-    console.log(adverts)
-    console.log('pintar ')
-
-    const [{Advert}] = adverts
-
-    let aaaaa = []
-    console.log('aaa0')
-    console.log(aaaaa)
-    console.log('aaa0')
-
 
     return (
-      <div className="row">linea---
-        {
-         adverts.map(advert => <AdvertLine Advert={Advert}/>)
-         //  <AdvertLine Advert={{tags: Array(3), _id: "5db338218cfc2139bc897417", name: "Raton Gaming Razer Mam"}}/>
+      <div className="row">
+        linea---
+        {datos.map(advert => ( <AdvertLine advert={{ advert }} /> ))
+        // <AdvertLine advert={{tags: Array(3), _id: "5db338218cfc2139bc897417", name: "Raton Gaming Razer Mam"}}/>
         }
-      +++fin</div>
-    )
+        +++fin
+      </div>
+    );
   };
 
   render() {
@@ -73,9 +70,7 @@ export default class AdvertsList extends Component {
     console.log(`contexto de AdvertList: ${name} ${surname} ${tag}`);
 
     // /////////////////////////////////////////////
-     const { adverts } = this.state;
-
-    // console.log(adverts);
+    const { adverts } = this.state;
 
     return (
       <div>
@@ -84,7 +79,7 @@ export default class AdvertsList extends Component {
         <h3>v{surname}</h3>
         <h3>v{tag}</h3>
         <button onClick={this.handleSubmit}>submit</button>
-        
+
         <h1>advertsline</h1>
         {this.buildAdvertsList(adverts)}
 
