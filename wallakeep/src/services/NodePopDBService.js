@@ -37,6 +37,30 @@ const api = () => {
             }
         },
 
+        searchFiltered: async (filter) => {
+            try {
+                const response = await fetch(`${ADVERT}${filter}`, data)
+
+                if (!response.ok) {
+                    throw new Error('Error fetching searchAll')
+                }
+
+                const dataDetails = response.json();
+
+                // const { success, count, results } = dataDetails;
+
+                // if (success === false) {
+                //     return "no hay ninguna cerveza con ese id";
+                // }
+
+                return dataDetails;
+
+            } catch (err) {
+                console.log('error searchAll: ' + err);
+                throw err;
+            }
+        },
+
         searchAdvert: async (id) => {
             try {
                 const response = await fetch(`${ADVERT}/${id}`, data)
