@@ -13,7 +13,8 @@ export default class AdvertsList extends Component {
 
     this.state = {
       adverts: [],
-      filterText: ""
+      filterText: "",
+      filterPrice: ""
     };
 
     this.loadInitList();
@@ -42,6 +43,12 @@ export default class AdvertsList extends Component {
     });
   };
 
+  onInputChangeFilterPrice = event => {
+    this.setState({
+      filterPrice: event.target.value
+    });
+  };
+
   //parte para filtros
   handleSubmit = async event => {
     //cambiamos el filtro que viene dado por el registro
@@ -50,12 +57,24 @@ export default class AdvertsList extends Component {
     locStorage.setItem("tag", this.context.tag);
 
     const filtersText = document.getElementById("filterText");
-    console.log(filtersText.value);
+    const filtersPrice = document.getElementById("filterPrice");
 
-    if (filtersText.value === "") {
-      const data = await searchAll();
-      // const { success, count, results } = data;
-      const { results } = data;
+    let filter = "";
+
+    if (filtersText.value !== "") {
+      filter = "name=" + filtersText.value;
+    }
+
+    if (filtersPrice.value !== "") {
+      if (filter !== "") filter += "&";
+      filter += "price=" + filtersPrice.value;
+    }
+
+    const data = await searchFiltered(filter);
+    // const { success, count, results } = data;
+    const { count, results } = data;
+
+    if (count > 0) {
       let adverts = [];
 
       results.map(elem => {
@@ -67,28 +86,10 @@ export default class AdvertsList extends Component {
         adverts
       });
     } else {
-      const data = await searchFiltered(`?name=${filtersText.value}`);
-      // const { success, count, results } = data;
-      const { count, results } = data;
-
-      if (count > 0) {
-        let adverts = [];
-
-        results.map(elem => {
-          adverts.push(new Advert(elem));
-          return true;
-        });
-
-        this.setState({
-          adverts
-        });
-
-      } else {
-        alert('no hay datos')
-        this.setState({
-          adverts:[]
-        });
-      }
+      alert("no hay datos");
+      this.setState({
+        adverts: []
+      });
     }
   };
 
@@ -126,11 +127,10 @@ export default class AdvertsList extends Component {
 
     this.context = locStorage.checkLocalStorage(this.context);
 
-    const { name, surname, tag } = this.context;
-
+    // const { name, surname, tag } = this.context;
+    const { tag } = this.context;
     const filterText = this.state.filterText;
-
-    console.log(this.context);
+    const filterPrice = this.state.filterPrice;
 
     return (
       <div>
@@ -145,8 +145,19 @@ export default class AdvertsList extends Component {
           name="filterText"
         />
 
-        <h3>v{name}</h3>
-        <h3>v{surname}</h3>
+        <br />
+
+        <input
+          id="filterPrice"
+          type="text"
+          placeholder="filtro de precio"
+          value={filterPrice}
+          onChange={this.onInputChangeFilterPrice}
+          name="filterPrice"
+        />
+
+        <br />
+
         {this.buildTagList()}
 
         <br />

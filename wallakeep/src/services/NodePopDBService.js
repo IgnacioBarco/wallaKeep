@@ -39,7 +39,8 @@ const api = () => {
 
         searchFiltered: async (filter) => {
             try {
-                const response = await fetch(`${ADVERT}${filter}`, data)
+                console.log(`${ADVERT}?${filter}`)
+                const response = await fetch(`${ADVERT}?${filter}`, data)
 
                 if (!response.ok) {
                     throw new Error('Error fetching searchAll')
