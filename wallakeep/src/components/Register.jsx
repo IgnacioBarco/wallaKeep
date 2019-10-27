@@ -11,8 +11,8 @@ export default class Register extends Component {
     this.state = {
       name: "",
       surname: "",
-      tag: ""
-      ,tags:[]
+      tag: "",
+      tags:[]
     };
 
     this.checkTags()
@@ -20,18 +20,13 @@ export default class Register extends Component {
 
   checkTags = async event => {
     const data = await searchTags();
-    const { success, count, results } = data;
+    // const { success, count, results } = data;
+    const { results } = data;
 
     let tags = [];
-
     results.map(elem => tags.push(elem));
 
-    console.log(tags);
-
     this.setState({
-      name: "",
-      surname: "",
-      tag: "",
       tags : tags
     });
   };
@@ -39,17 +34,17 @@ export default class Register extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const { name, surname, tag } = this.state;
+    const { name, surname, tag, tags } = this.state;
     this.context.name = name;
     this.context.surname = surname;
     this.context.tag = tag;
+    
 
     // Guardamos en localstorage
     locStorage.setItem("name", name);
     locStorage.setItem("surname", surname);
     locStorage.setItem("tag", tag);
-
-    console.log(this.state)
+    locStorage.setItem("tags", tags);
 
     this.props.history.push("/adverts");
   };
@@ -58,17 +53,14 @@ export default class Register extends Component {
     let tags = [];
     tags = this.state.tags
 
-    // let tags = [];
-
-    // results.map(elem => tags.push(elem));
-
-    console.log(tags);
-
     return (
-      <select>
-        {tags.map(elem => {
-          return <option value="{elem}">{elem}</option>;
-        })}
+      <select onChange={this.onInputChangeTags}>
+        <option value="">Tag de búsqueda</option>
+        { 
+          tags.map(elem => {
+            return <option key={elem} value={elem}>{elem}</option>;
+          })
+        }
       </select>
     );
   };
@@ -78,19 +70,22 @@ export default class Register extends Component {
       name: event.target.value
     });
   };
+  
   onInputChangeSurname = event => {
     this.setState({
       surname: event.target.value
     });
   };
-  onInputChangeTag = event => {
+  
+  onInputChangeTags = event => {
     this.setState({
       tag: event.target.value
     });
   };
 
   render() {
-    const { name, surname, tag } = this.state;
+    // const { name, surname, tag } = this.state;
+    const { name, surname } = this.state;
 
     return (
       <form>
@@ -110,14 +105,6 @@ export default class Register extends Component {
           value={surname}
           onChange={this.onInputChangeSurname}
           name="surname"
-        />
-
-        <input
-          type="text"
-          placeholder="Tag"
-          value={tag}
-          onChange={this.onInputChangeTag}
-          name="tag"
         />
 
         {this.buildTags()} 

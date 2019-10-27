@@ -11,7 +11,7 @@ export default class AdvertDetail extends Component {
 
     this.state = {
       success: false,
-      result : {}
+      result: {}
     };
 
     this.loadAdvert();
@@ -27,20 +27,21 @@ export default class AdvertDetail extends Component {
       success,
       result
     });
-
   };
 
   buildDetailAdvert = () => {
-    const advert = this.state.result
+    const advert = this.state.result;
+    const img = "http://localhost:3001/" + advert.photo;
+    
     return (
       <div className="row">
-        <h2>{advert.name}</h2>
-        <h3>{advert.price}</h3>
-        <h3>{advert.description}</h3>
-        <h3>{advert.type}</h3>
-        <h3>{advert.photo}</h3>
-        <h3>{advert.createdAt}</h3>
-        <h3>{advert.updatedAt}</h3>
+        <h1>{advert.name}</h1>
+        <img src={img} alt={advert.description} />
+        <h2>Precio: {advert.price}€</h2>
+        <h2>Descripción: {advert.name}</h2>
+        <h3>Estado: {advert.type === "buy" ? "se compra" : "se vende"}</h3>
+        <h3>Creado el {advert.createdAt}</h3>
+        <h3>Actualizado el {advert.updatedAt}</h3>
       </div>
     );
   };
@@ -54,23 +55,13 @@ export default class AdvertDetail extends Component {
     if (!locStorage.checkIsNull()) {
       console.log("falta algun dato");
       this.props.history.push("/");
-    } else {
-      console.log("todo bien");
     }
 
     this.context = locStorage.checkLocalStorage(this.context);
 
-    const { name, surname, tag } = this.context;
-
-    console.log(`contexto de AdvertDetail: ${name} ${surname} ${tag}`);
-
     return (
       <div>
-        {
-          this.state.success === true 
-          && 
-          this.buildDetailAdvert()
-        }
+        {this.state.success === true && this.buildDetailAdvert()}
 
         <button onClick={this.handleSubmitBack}>Volver</button>
       </div>

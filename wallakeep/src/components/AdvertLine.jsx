@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import MainContext from "../services/MainContext";
 import { withRouter } from "react-router-dom";
 
 class AdvertLine extends Component {
@@ -18,10 +19,18 @@ class AdvertLine extends Component {
         className="col-4"
         onClick={this.goToDetail}
       >
-        <h5>{advert.name}</h5>
+        <h5
+          style={{
+            color: advert.tags.includes(this.context.tag) ? "green" : "red"
+          }}
+        >
+          {advert.name}
+        </h5>
       </div>
     );
   }
 }
+
+AdvertLine.contextType = MainContext;
 
 export default withRouter(AdvertLine);

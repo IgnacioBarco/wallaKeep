@@ -11,8 +11,6 @@ export default class CreateAndUpdate extends Component {
     if (!locStorage.checkIsNull()) {
       console.log("falta algun dato");
       this.props.history.push("/");
-    } else {
-      console.log("todo bien");
     }
 
     this.context = locStorage.checkLocalStorage(this.context);

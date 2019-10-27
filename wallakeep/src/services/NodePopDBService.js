@@ -1,5 +1,3 @@
-import Advert from '../models/Advert';
-
 const API_URL = 'http://localhost:3001/apiv1';
 const ALL_ADVERTS = API_URL + '/anuncios'
 const ADVERT = API_URL + '/anuncios'

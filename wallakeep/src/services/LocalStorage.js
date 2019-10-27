@@ -25,11 +25,10 @@ const locStorage = {
         if (locStorage.isItem('tag')) {
             ctx.tag = locStorage.getItem('tag');
         }
-
-        console.log('ctx:  ' + ctx)
-        console.log('ctx:  ' + ctx.name)
-        console.log('ctx:  ' + ctx.surname)
-        console.log('ctx:  ' + ctx.tag)
+        
+        if (locStorage.isItem('tags')) {
+            ctx.tags = locStorage.getItem('tags');
+        }
 
         return ctx;
 

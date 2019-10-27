@@ -25,8 +25,8 @@ class App extends Component {
   };
 
 
-  
-  render(){
+
+  render() {
     const value = {
       name: this.state.name,
       surname: this.state.surname,
@@ -34,45 +34,39 @@ class App extends Component {
     }
 
     return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      <ErrorBoundary>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+          </header>
 
-      <main>
+          <main>
 
-        <h3>Mensajes varios</h3>
+            <MainContext.Provider value={value} >
 
-        <ErrorBoundary>
+              <Router>
 
-          <MainContext.Provider value={value} >
+                <Switch>
+                  <Route path='/adverts' component={AdvertsList} />
+                  <Route path='/advert/:id' component={AdvertDetail} />
+                  <Route path='/new' component={CreateAndUpdate} />
+                  <Route path='/modify/:id' component={CreateAndUpdate} />
+                  <Route component={Register} />
 
-            <Router>
+                </Switch>
 
-              <Switch>
-                <Route path='/adverts' component={AdvertsList} />
-                <Route path='/advert/:id' component={AdvertDetail} />
-                <Route path='/new' component={CreateAndUpdate} />
-                <Route path='/modify/:id' component={CreateAndUpdate} />
-                <Route component={Register} />
+              </Router>
 
-              </Switch>
+            </MainContext.Provider>
 
-            </Router>
+          </main>
 
-          </MainContext.Provider>
+          <footer></footer>
 
-        </ErrorBoundary>
-
-
-      </main>
-
-      <footer>
-
-      </footer>
-
-    </div >
-  );}
+        </div >
+      </ErrorBoundary>
+    );
+  }
 }
 
 export default App;
