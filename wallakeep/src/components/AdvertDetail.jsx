@@ -1,14 +1,52 @@
 import React, { Component } from "react";
 import MainContext from "../services/MainContext";
 import locStorage from "../services/LocalStorage";
+import api from "../services/NodePopDBService";
+
+const { searchAdvert } = api();
 
 export default class AdvertDetail extends Component {
-  constructor(props){
-      super(props);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      success: false,
+      result : {}
+    };
+
+    this.loadAdvert();
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();  
+  loadAdvert = async event => {
+    const id = this.props.match.params.id;
+    const data = await searchAdvert(id);
+
+    const { success, result } = data;
+
+    this.setState({
+      success,
+      result
+    });
+
+  };
+
+  buildDetailAdvert = () => {
+    const advert = this.state.result
+    return (
+      <div className="row">
+        <h2>{advert.name}</h2>
+        <h3>{advert.price}</h3>
+        <h3>{advert.description}</h3>
+        <h3>{advert.type}</h3>
+        <h3>{advert.photo}</h3>
+        <h3>{advert.createdAt}</h3>
+        <h3>{advert.updatedAt}</h3>
+      </div>
+    );
+  };
+
+  handleSubmitBack = event => {
+    event.preventDefault();
     this.props.history.push("/adverts");
   };
 
@@ -28,8 +66,13 @@ export default class AdvertDetail extends Component {
 
     return (
       <div>
-        <h1>AdvertDetail</h1>
-        <button onClick={this.handleSubmit}>Volver</button>
+        {
+          this.state.success === true 
+          && 
+          this.buildDetailAdvert()
+        }
+
+        <button onClick={this.handleSubmitBack}>Volver</button>
       </div>
     );
   }

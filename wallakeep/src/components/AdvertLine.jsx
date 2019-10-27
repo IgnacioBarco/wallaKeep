@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 class AdvertLine extends Component {
   goToDetail = () => {
-    this.props.history.push(`/detail/${this.props.advert._id}`);
+    this.props.history.push(`/advert/${this.props.advert._id}`);
   };
 
   render() {
