@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import MainContext from "../services/MainContext";
-import locStorage from '../services/LocalStorage';
+import locStorage from "../services/LocalStorage";
+import api from "../services/NodePopDBService";
 
+const { searchTags } = api();
 
 export default class Register extends Component {
   constructor() {
@@ -10,23 +12,65 @@ export default class Register extends Component {
       name: "",
       surname: "",
       tag: ""
+      ,tags:[]
     };
+
+    this.checkTags()
   }
 
-  handleSubmit = (event) => {
+  checkTags = async event => {
+    const data = await searchTags();
+    const { success, count, results } = data;
+
+    let tags = [];
+
+    results.map(elem => tags.push(elem));
+
+    console.log(tags);
+
+    this.setState({
+      name: "",
+      surname: "",
+      tag: "",
+      tags : tags
+    });
+  };
+
+  handleSubmit = event => {
     event.preventDefault();
-    
+
     const { name, surname, tag } = this.state;
     this.context.name = name;
     this.context.surname = surname;
     this.context.tag = tag;
 
     // Guardamos en localstorage
-    locStorage.setItem('name', name);
-    locStorage.setItem('surname', surname);
-    locStorage.setItem('tag', tag);
+    locStorage.setItem("name", name);
+    locStorage.setItem("surname", surname);
+    locStorage.setItem("tag", tag);
 
-    this.props.history.push('/adverts');
+    console.log(this.state)
+
+    this.props.history.push("/adverts");
+  };
+
+  buildTags = () => {
+    let tags = [];
+    tags = this.state.tags
+
+    // let tags = [];
+
+    // results.map(elem => tags.push(elem));
+
+    console.log(tags);
+
+    return (
+      <select>
+        {tags.map(elem => {
+          return <option value="{elem}">{elem}</option>;
+        })}
+      </select>
+    );
   };
 
   onInputChangeName = event => {
@@ -75,6 +119,8 @@ export default class Register extends Component {
           onChange={this.onInputChangeTag}
           name="tag"
         />
+
+        {this.buildTags()} 
 
         <button onClick={this.handleSubmit}>submit</button>
       </form>
