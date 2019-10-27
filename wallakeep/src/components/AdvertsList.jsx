@@ -16,9 +16,12 @@ export default class AdvertsList extends Component {
       filterText: "",
       filterPrice: ""
     };
-
-    this.loadInitList();
   }
+
+  //cargamos la lista de todos los anuncios
+  UNSAFE_componentWillMount = () => {
+    this.loadInitList();
+  };
 
   loadInitList = async event => {
     const data = await searchAll();
@@ -37,6 +40,11 @@ export default class AdvertsList extends Component {
     });
   };
 
+  handleSubmitNew = event => {
+    event.preventDefault();
+    this.props.history.push("/new");
+  };
+
   onInputChangeFilterText = event => {
     this.setState({
       filterText: event.target.value
@@ -49,7 +57,7 @@ export default class AdvertsList extends Component {
     });
   };
 
-  //parte para filtros
+  //manejamos los filtros al presionar el boton de enviar
   handleSubmit = async event => {
     //cambiamos el filtro que viene dado por el registro
     const filtersTags = document.getElementById("filtroTags");
@@ -93,6 +101,8 @@ export default class AdvertsList extends Component {
     }
   };
 
+  //construimos el html de los anuncios
+  //ponemos en verde los que coinciden con el tag seleccionado
   buildAdvertsList = () => {
     return (
       <div className="row">
@@ -103,6 +113,7 @@ export default class AdvertsList extends Component {
     );
   };
 
+  //recuperamos los tags del localStorage y los pintamos
   buildTagList = () => {
     const elems = this.context.tags.split(",");
 
@@ -134,6 +145,12 @@ export default class AdvertsList extends Component {
 
     return (
       <div>
+        <br />
+
+        <button onClick={this.handleSubmitNew}>Crear anuncio nuevo</button>
+
+        <br />
+
         <h1>Lista de filtros:</h1>
 
         <input
@@ -167,7 +184,11 @@ export default class AdvertsList extends Component {
         <h1>Lista de artículos:</h1>
         <h3>tag filtrado: {tag}</h3>
 
-        {this.state.adverts.length > 0 && this.buildAdvertsList()}
+        {
+          this.state.adverts.length > 0 
+          && 
+          this.buildAdvertsList()
+        }
       </div>
     );
   }

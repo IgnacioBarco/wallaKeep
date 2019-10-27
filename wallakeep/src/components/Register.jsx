@@ -12,12 +12,15 @@ export default class Register extends Component {
       name: "",
       surname: "",
       tag: "",
-      tags:[]
+      tags: []
     };
-
-    this.checkTags()
   }
 
+  UNSAFE_componentWillMount = () => {
+    this.checkTags();
+  };
+
+  //obtenemos los tags de la API
   checkTags = async event => {
     const data = await searchTags();
     // const { success, count, results } = data;
@@ -27,7 +30,7 @@ export default class Register extends Component {
     results.map(elem => tags.push(elem));
 
     this.setState({
-      tags : tags
+      tags: tags
     });
   };
 
@@ -38,7 +41,7 @@ export default class Register extends Component {
     this.context.name = name;
     this.context.surname = surname;
     this.context.tag = tag;
-    
+    this.context.tags = tags;
 
     // Guardamos en localstorage
     locStorage.setItem("name", name);
@@ -49,18 +52,21 @@ export default class Register extends Component {
     this.props.history.push("/adverts");
   };
 
+  //creamos el template para cargar los tags
   buildTags = () => {
     let tags = [];
-    tags = this.state.tags
+    tags = this.state.tags;
 
     return (
       <select onChange={this.onInputChangeTags}>
         <option value="">Tag de búsqueda</option>
-        { 
-          tags.map(elem => {
-            return <option key={elem} value={elem}>{elem}</option>;
-          })
-        }
+        {tags.map(elem => {
+          return (
+            <option key={elem} value={elem}>
+              {elem}
+            </option>
+          );
+        })}
       </select>
     );
   };
@@ -70,13 +76,13 @@ export default class Register extends Component {
       name: event.target.value
     });
   };
-  
+
   onInputChangeSurname = event => {
     this.setState({
       surname: event.target.value
     });
   };
-  
+
   onInputChangeTags = event => {
     this.setState({
       tag: event.target.value
@@ -107,7 +113,7 @@ export default class Register extends Component {
           name="surname"
         />
 
-        {this.buildTags()} 
+        {this.buildTags()}
 
         <button onClick={this.handleSubmit}>submit</button>
       </form>

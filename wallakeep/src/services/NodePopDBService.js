@@ -9,8 +9,6 @@ const data = {
     }
 }
 
-
-
 const api = () => {
     return {
         searchAll: async () => {
@@ -23,12 +21,6 @@ const api = () => {
 
                 const dataDetails = response.json();
 
-                // const { success, count, results } = dataDetails;
-
-                // if (success === false) {
-                //     return "no hay ninguna cerveza con ese id";
-                // }
-
                 return dataDetails;
 
             } catch (err) {
@@ -39,7 +31,6 @@ const api = () => {
 
         searchFiltered: async (filter) => {
             try {
-                console.log(`${ADVERT}?${filter}`)
                 const response = await fetch(`${ADVERT}?${filter}`, data)
 
                 if (!response.ok) {
@@ -48,16 +39,10 @@ const api = () => {
 
                 const dataDetails = response.json();
 
-                // const { success, count, results } = dataDetails;
-
-                // if (success === false) {
-                //     return "no hay ninguna cerveza con ese id";
-                // }
-
                 return dataDetails;
 
             } catch (err) {
-                console.log('error searchAll: ' + err);
+                console.log('error searchFiltered: ' + err);
                 throw err;
             }
         },

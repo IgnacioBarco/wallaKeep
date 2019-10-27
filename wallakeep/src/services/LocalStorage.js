@@ -25,7 +25,7 @@ const locStorage = {
         if (locStorage.isItem('tag')) {
             ctx.tag = locStorage.getItem('tag');
         }
-        
+
         if (locStorage.isItem('tags')) {
             ctx.tags = locStorage.getItem('tags');
         }
@@ -35,7 +35,13 @@ const locStorage = {
     },
 
     checkIsNull: () => {
-        if (!locStorage.isItem('name') || !locStorage.isItem('surname') || !locStorage.isItem('tag')) {
+        if (!locStorage.isItem('name')
+            || !locStorage.isItem('surname')
+            || !locStorage.isItem('tag')
+            || !locStorage.isItem('tags')
+            || locStorage.getItem('tags').length === 0
+        ) {
+            alert('Faltan datos en localStorage, volvemos al registro!!!')
             return false
         }
 

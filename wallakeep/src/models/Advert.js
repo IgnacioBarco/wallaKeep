@@ -22,7 +22,4 @@ export default class Advert {
 
     }
 
-    //  isTag(dato) {
-    //      return this.tags.includes(dato);
-    //  }
 }

@@ -12,7 +12,6 @@ import MainContext from './services/MainContext'
 import logo from './img/logo.svg';
 import './css/App.css';
 
-// function App() {
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,22 +19,24 @@ class App extends Component {
     this.state = {
       name: '',
       surname: '',
-      tag: ''
+      tag: '',
+      tags: []
     }
   };
-
-
 
   render() {
     const value = {
       name: this.state.name,
       surname: this.state.surname,
-      tag: this.state.tag
+      tag: this.state.tag,
+      tags: this.state.tags
     }
 
     return (
       <ErrorBoundary>
+
         <div className="App">
+
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
           </header>
@@ -61,9 +62,8 @@ class App extends Component {
 
           </main>
 
-          <footer></footer>
-
         </div >
+
       </ErrorBoundary>
     );
   }
